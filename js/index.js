@@ -1,6 +1,13 @@
 // Create floating particles
 function createParticles() {
   const particlesContainer = document.getElementById("particles");
+
+  // Safety check - ensure element exists
+  if (!particlesContainer) {
+    console.error("Particles container not found");
+    return;
+  }
+
   const particleCount = 50;
 
   for (let i = 0; i < particleCount; i++) {
@@ -139,6 +146,12 @@ function togglePasswordVisibility() {
   const toggleButton = document.getElementById("togglePassword");
   const eyeIcon = document.getElementById("eyeIcon");
 
+  // Safety check
+  if (!passwordInput || !toggleButton || !eyeIcon) {
+    console.error("Password toggle elements not found");
+    return;
+  }
+
   if (passwordInput.type === "password") {
     passwordInput.type = "text";
     eyeIcon.textContent = "👁️";
@@ -156,6 +169,9 @@ window.onload = function () {
   updateTime();
   setInterval(updateTime, 1000);
 
-  // Focus on password input
-  document.getElementById("passwordInput").focus();
+  // Focus on password input (with safety check)
+  const passwordInput = document.getElementById("passwordInput");
+  if (passwordInput) {
+    passwordInput.focus();
+  }
 };
