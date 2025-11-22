@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whispers of a Butterfly - Lock Screen</title>
+    <link rel="icon" type="image/png" href="./assets/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body>
+    <!-- Animated particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Lock screen -->
+    <div class="lock-screen" id="lockScreen">
+      <!-- Time and date -->
+      <div class="time-display" id="time">00:00</div>
+      <div class="date-display" id="date">Loading...</div>
+
+      <!-- Butterfly -->
+      <div class="butterfly-container">
+        <div class="butterfly">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Butterfly body -->
+            <ellipse cx="100" cy="100" rx="8" ry="40" fill="#FFD700" />
+
+            <!-- Left wing -->
+            <g class="wing-left">
+              <ellipse
+                cx="70"
+                cy="80"
+                rx="35"
+                ry="45"
+                fill="#FF69B4"
+                opacity="0.8"
+              />
+              <ellipse
+                cx="65"
+                cy="75"
+                rx="25"
+                ry="35"
+                fill="#FFB6C1"
+                opacity="0.6"
+              />
+              <ellipse
+                cx="60"
+                cy="70"
+                rx="15"
+                ry="25"
+                fill="#FFF"
+                opacity="0.4"
+              />
+              <ellipse
+                cx="70"
+                cy="120"
+                rx="30"
+                ry="40"
+                fill="#FF1493"
+                opacity="0.7"
+              />
+              <ellipse
+                cx="65"
+                cy="115"
+                rx="20"
+                ry="30"
+                fill="#FFB6C1"
+                opacity="0.5"
+              />
+            </g>
+
+            <!-- Right wing -->
+            <g class="wing-right">
+              <ellipse
+                cx="130"
+                cy="80"
+                rx="35"
+                ry="45"
+                fill="#FF69B4"
+                opacity="0.8"
+              />
+              <ellipse
+                cx="135"
+                cy="75"
+                rx="25"
+                ry="35"
+                fill="#FFB6C1"
+                opacity="0.6"
+              />
+              <ellipse
+                cx="140"
+                cy="70"
+                rx="15"
+                ry="25"
+                fill="#FFF"
+                opacity="0.4"
+              />
+              <ellipse
+                cx="130"
+                cy="120"
+                rx="30"
+                ry="40"
+                fill="#FF1493"
+                opacity="0.7"
+              />
+              <ellipse
+                cx="135"
+                cy="115"
+                rx="20"
+                ry="30"
+                fill="#FFB6C1"
+                opacity="0.5"
+              />
+            </g>
+
+            <!-- Antennae -->
+            <path
+              d="M 95 60 Q 85 40 80 30"
+              stroke="#FFD700"
+              stroke-width="2"
+              fill="none"
+            />
+            <path
+              d="M 105 60 Q 115 40 120 30"
+              stroke="#FFD700"
+              stroke-width="2"
+              fill="none"
+            />
+            <circle cx="80" cy="30" r="3" fill="#FFD700" />
+            <circle cx="120" cy="30" r="3" fill="#FFD700" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Lock text -->
+      <div class="lock-icon">🔒</div>
+      <h1 class="lock-title">Whispers of a Butterfly</h1>
+      <p class="lock-subtitle">A journey through dreams and love</p>
+
+      <!-- Unlock button -->
+      <div class="unlock-container">
+        <div class="password-wrapper">
+          <input
+            type="password"
+            class="password-input"
+            id="passwordInput"
+            placeholder="Enter password"
+            onkeypress="handleKeyPress(event)"
+          />
+          <button
+            class="toggle-password"
+            id="togglePassword"
+            onclick="togglePasswordVisibility()"
+            type="button"
+          >
+            <span class="eye-icon" id="eyeIcon">👁️</span>
+          </button>
+        </div>
+        <div class="error-message" id="errorMessage">
+          Incorrect password. Try again!
+        </div>
+        <button class="unlock-button" onclick="unlockScreen()">
+          <span>Unlock</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom Popup Modal -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()">
+      <div class="popup-content" onclick="event.stopPropagation()">
+        <div class="attempt-counter" id="attemptCounter">Attempt 1</div>
+        <div class="popup-icon" id="popupIcon">🦋</div>
+        <h2 class="popup-title" id="popupTitle">Oops!</h2>
+        <p class="popup-message" id="popupMessage">That's not quite right...</p>
+        <div class="popup-hint" id="popupHint">
+          💡 Hint: Think of something delicate and beautiful...
+        </div>
+        <button class="popup-close-btn" onclick="closePopup()">
+          Try Again
+        </button>
+      </div>
+    </div>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>
