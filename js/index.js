@@ -1,10 +1,10 @@
 // Create floating particles
 function createParticles() {
-  const particlesContainer = document.getElementById("particles");
+  const particlesContainer =
+    document.getElementById("particles") || document.querySelector(".particles");
 
-  // Safety check - ensure element exists
+  // Skip silently when this script runs on pages without a particle container.
   if (!particlesContainer) {
-    console.error("Particles container not found");
     return;
   }
 
@@ -69,29 +69,61 @@ function showCustomPopup() {
   const messageIndex = Math.min(wrongAttempts - 1, popupMessages.length - 1);
   const popup = popupMessages[messageIndex];
 
-  document.getElementById("popupIcon").textContent = popup.icon;
-  document.getElementById("popupTitle").textContent = popup.title;
-  document.getElementById("popupMessage").textContent = popup.message;
-  document.getElementById("popupHint").textContent = popup.hint;
-  document.getElementById(
-    "attemptCounter"
-  ).textContent = `Attempt ${wrongAttempts}`;
+  const popupIcon = document.getElementById("popupIcon");
+  const popupTitle = document.getElementById("popupTitle");
+  const popupMessage = document.getElementById("popupMessage");
+  const popupHint = document.getElementById("popupHint");
+  const attemptCounter = document.getElementById("attemptCounter");
+  const popupOverlay = document.getElementById("popupOverlay");
 
-  document.getElementById("popupOverlay").classList.add("show");
+  if (
+    !popupIcon ||
+    !popupTitle ||
+    !popupMessage ||
+    !popupHint ||
+    !attemptCounter ||
+    !popupOverlay
+  ) {
+    return;
+  }
+
+  popupIcon.textContent = popup.icon;
+  popupTitle.textContent = popup.title;
+  popupMessage.textContent = popup.message;
+  popupHint.textContent = popup.hint;
+  attemptCounter.textContent = `Attempt ${wrongAttempts}`;
+
+  popupOverlay.classList.add("show");
 }
 
 // Close popup
 function closePopup() {
-  document.getElementById("popupOverlay").classList.remove("show");
-  document.getElementById("passwordInput").focus();
+  const popupOverlay = document.getElementById("popupOverlay");
+  const passwordInput = document.getElementById("passwordInput");
+
+  if (popupOverlay) {
+    popupOverlay.classList.remove("show");
+  }
+
+  if (passwordInput) {
+    passwordInput.focus();
+  }
 }
 
 // Update time and date
 function updateTime() {
+  const timeElement = document.getElementById("time");
+  const dateElement = document.getElementById("date");
+
+  // Skip silently when this script is loaded outside the lock screen page.
+  if (!timeElement || !dateElement) {
+    return;
+  }
+
   const now = new Date();
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
-  document.getElementById("time").textContent = `${hours}:${minutes}`;
+  timeElement.textContent = `${hours}:${minutes}`;
 
   const options = {
     weekday: "long",
@@ -100,7 +132,7 @@ function updateTime() {
     day: "numeric",
   };
   const dateString = now.toLocaleDateString("en-US", options);
-  document.getElementById("date").textContent = dateString;
+  dateElement.textContent = dateString;
 }
 
 // Unlock screen animation
@@ -164,14 +196,19 @@ function togglePasswordVisibility() {
 }
 
 // Initialize
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", function () {
   createParticles();
-  updateTime();
-  setInterval(updateTime, 1000);
+
+  const hasTimeDisplay =
+    document.getElementById("time") && document.getElementById("date");
+  if (hasTimeDisplay) {
+    updateTime();
+    setInterval(updateTime, 1000);
+  }
 
   // Focus on password input (with safety check)
   const passwordInput = document.getElementById("passwordInput");
   if (passwordInput) {
     passwordInput.focus();
   }
-};
+});
